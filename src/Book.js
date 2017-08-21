@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 
 class Book extends Component {
+  //assign required prop-types to book component
   static PropTypes = {
     book: PropTypes.object.isRequired,
-    moveBook: PropTypes.func.isRequired
+    onMoveBook: PropTypes.func.isRequired
   };
 
+  //updateBook using BookAPI
   updateBook = event => {
-    const { book, moveBook } = this.props;
+    const { book, onMoveBook } = this.props;
     let shelf = event.target.value;
     BooksAPI.update(book, shelf).then(() => {
-      moveBook(book, shelf);
+      onMoveBook(book, shelf);
     });
   };
 
+  //render each book
   render() {
     const book = this.props.book;
 

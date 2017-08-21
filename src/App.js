@@ -1,5 +1,5 @@
 import React from 'react';
-import ListBookShelf from './ListBookShelf';
+import ListAllShelves from './ListAllShelves';
 import SearchBooks from './SearchBooks';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
@@ -10,52 +10,36 @@ class BooksApp extends React.Component {
     books: []
   };
 
+  //get all books onload
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState({ books });
+    });
+  }
+  //update book when changes shelf
   updateBook = (book, newShelf) => {
     book.shelf = newShelf;
     this.setState(state => ({
       books: state.books.filter(b => b.id !== book.id).concat([book])
     }));
   };
-
-  componentDidMount() {
-    BooksAPI.getAll().then(books => {
-      this.setState({ books });
-    });
-  }
   render() {
-    const books = this.state.books,
-      shelfCategories = ['currentlyReading', 'wantToRead', 'read'];
-
     return (
       <div className="app">
+        {console.log(this.state.books)}
         <Route path="/search" render={() => <SearchBooks />} />
 
         <Route
           exact
           path="/"
-          render={({ history }) =>
-            <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-                <div>
-                  {shelfCategories.map(category => {
-                    let sortedBooks = books.filter(
-                      book => book.shelf === category
-                    );
-                    return (
-                      <ListBookShelf
-                        key={category}
-                        books={sortedBooks}
-                        onChangeShelf={this.updateBook}
-                        category={category}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>}
+          render={() =>
+            //render all books on shelves
+            <ListAllShelves
+              books={this.state.books}
+              onMoveBook={(book, shelf) => {
+                this.updateBook(book, shelf);
+              }}
+            />}
         />
       </div>
     );
