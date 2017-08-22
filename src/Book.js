@@ -22,6 +22,12 @@ class Book extends Component {
   render() {
     const book = this.props.book;
 
+    //if thumbnail or authors is unknown add default
+    let thumbnail = book.imageLinks
+      ? book.imageLinks.thumbnail
+      : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
+    let authors = book.authors ? book.authors : [];
+
     return (
       <div className="book">
         <div className="book-top">
@@ -30,7 +36,7 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks['thumbnail']})`
+              backgroundImage: `url(${thumbnail})`
             }}
           />
           <div className="book-shelf-changer">
@@ -49,7 +55,7 @@ class Book extends Component {
           {book.title}
         </div>
         <div className="book-authors">
-          {book.authors}
+          {authors}
         </div>
       </div>
     );
