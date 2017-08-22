@@ -12,11 +12,11 @@
     "sort-by": "^1.2.0"
   },
   "lint-staged": {
-   "src/**/*.{js,jsx,json,css}": [
-     "prettier --single-quote --write",
-     "git add"
-   ]
- },
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "react-scripts": "1.0.11"
   },
