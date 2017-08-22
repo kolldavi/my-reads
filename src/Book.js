@@ -10,7 +10,7 @@ class Book extends Component {
     onMoveBook: PropTypes.func.isRequired
   };
   state = {
-    open: false
+    displayModal: false
   };
   //updateBook using BookAPI
   updateBook = event => {
